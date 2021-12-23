@@ -1,0 +1,19 @@
+<div class="page-header flex-wrap flex-md-nowrap">
+  <h1 class="h2">Show Ingredient</h1>
+
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <%= link_to admin_ingredients_path, class: 'btn btn-light' do %>
+      <i class="fa fa-angle-left"></i>
+      All Ingredients
+    <% end %>
+    <%= link_to "Edit", edit_admin_ingredient_path(@ingredient), class: 'btn btn-primary' %>
+  </div>
+</div>
+
+<div class="card mb-3">
+  <div class="card-body">
+    <dl class="row">
+      <dt class="col-sm-3">Name:</dt>
+      <dd class="col-sm-9"><%= @ingredient.name %></dd>
+  </div>
+</div>

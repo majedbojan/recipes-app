@@ -1,0 +1,9 @@
+<div class="page-header flex-wrap flex-md-nowrap">
+  <%# <h1 class="h2">Recipe</h1> %>
+</div>
+
+<div class="card-columns">
+  <%= render partial: 'recipe', collection: @recipes %>
+</div>
+
+<%== pagy_bootstrap_nav(@pagy) %>

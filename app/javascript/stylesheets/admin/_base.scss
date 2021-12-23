@@ -1,0 +1,16 @@
+#admin {
+  @import 'page';
+  @import 'sidebar';
+  @import 'navbar';
+  @import 'forms/selectgroup';
+
+  body {
+    font-size: 0.875rem;
+  }
+
+  .fa {
+    width: 16px;
+    height: 16px;
+    vertical-align: text-bottom;
+  }
+}

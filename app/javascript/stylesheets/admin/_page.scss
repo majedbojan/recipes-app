@@ -1,0 +1,8 @@
+.page-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-bottom: map-get($spacers, 2);
+  margin-bottom: map-get($spacers, 3);
+  border-bottom: 1px solid $gray-300;
+}

@@ -1,0 +1,13 @@
+<div class="card mb-3 recipe">
+  <%= link_to recipe_path(recipe) do
+    if recipe.image_url.present?
+      image_tag(recipe.image_url, class: 'card-img-top')
+    else
+      image_tag('https://assets.afcdn.com/recipe/20180330/78291_w420h344c1cx2808cy1872cxt0cyt0cxb5616cyb3744.jpg', class: 'card-img-top')
+    end
+  end %>
+  <div class="card-body">
+    <h5 class="card-title"><%= link_to recipe.name.first(15), recipe_path(recipe) %></h5>
+    <p class="card-text"><small class="text-muted"><%= recipe.created_at %> @ <%= format_timestamp(recipe.created_at, :time_only) %></small></p>
+  </div>
+</div>

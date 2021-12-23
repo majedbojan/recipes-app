@@ -1,0 +1,58 @@
+<%= form_with(model: [:admin, user], local: true, builder: ::FormBuilder) do |form| %>
+  <div class="card mb-4">
+    <div class="card-body">
+      <% if user.errors.any? %>
+        <div id="error_explanation" class="alert alert-danger">
+          <h2 class="h5"><%= pluralize(user.errors.count, "error") %> prohibited this user from being saved:</h2>
+
+          <ul class="mb-0">
+          <% user.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="form-group">
+        <%= form.label :name %>
+        <%= form.text_field :name, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :email %>
+        <%= form.email_field :email, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :phone %>
+        <%= form.text_field :phone, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :role %>
+        <%= form.select :role, User.roles.keys, {}, class: 'form-control' %>
+      </div>
+
+      <div class="form-group">
+        <%= form.label :status %>
+        <%= form.select :status, User.statuses.keys, {}, class: 'form-control' %>
+      </div>
+
+      <div class="form-group mb-0">
+        <% if user.persisted? %>
+          <div class="float-right">
+            <%= link_to 'Destroy', admin_user_path(user), method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' } %>
+          </div>
+        <% end %>
+
+        <%= form.submit class: 'btn btn-primary' %>
+
+        <% if user.persisted? %>
+          <%= link_to "Cancel", admin_user_path(user), class: "btn btn-link" %>
+        <% else %>
+          <%= link_to "Cancel", admin_users_path, class: "btn btn-link" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

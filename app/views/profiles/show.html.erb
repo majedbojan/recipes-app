@@ -1,0 +1,9 @@
+<%= render layout: 'layouts/profile_layout' do %>
+  <div class="card">
+    <div class="card-body">
+      <h4 class="card-title mb-4"><%= current_user.name %> profile</h4>
+
+      <%= render 'form', user: current_user %>
+    </div>
+  </div>
+<% end %>

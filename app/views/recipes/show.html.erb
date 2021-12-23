@@ -1,0 +1,22 @@
+
+
+<div class="card recipe">
+  <div id="images" class="carousel slide" data-ride="carousel">
+    <div class="carousel-inner">
+      <% if @recipe.image_url.present? %>
+       <%= image_tag(@recipe.image_url, class: 'card-img-top') %>
+      <% else %>
+        <div class="carousel-item active">
+          <%= image_pack_tag('media/images/placeholder.png', class: 'd-block w-100', alt: @recipe.name) %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+
+  <div class="card-body">
+    <div class="card-text">
+      <%= @recipe.name %>
+    </div>
+  </div>
+</div>
+

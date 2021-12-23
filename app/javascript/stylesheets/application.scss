@@ -1,0 +1,7 @@
+@import 'vendors/bootstrap.scss';
+@import 'vendors/font-awesome.scss';
+@import 'vendors/actiontext.scss';
+
+// TODO: split admin from main app
+@import 'admin/base';
+@import 'app/base';

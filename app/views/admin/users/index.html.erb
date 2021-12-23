@@ -1,0 +1,42 @@
+<div class="page-header flex-wrap flex-md-nowrap">
+  <h1 class="h2">Users</h1>
+</div>
+
+<%= search_form_for [:admin, @q], class: 'd-flex mb-3' do |f| %>
+  <%= f.search_field :search_cont, placeholder: 'Search for user', value: params.dig(:q, :search_cont), class: 'form-control mr-3' %>
+  <%= f.submit 'Search', class: 'btn btn-primary', data: { disable_with: 'Searching...' } %>
+<% end %>
+
+<div class="card mb-3">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead>
+        <tr>
+          <th><%= sort_link(@q, :name, 'Name') %></th>
+          <th><%= sort_link(@q, :email) %></th>
+          <th><%= sort_link(@q, :phone) %></th>
+          <th><%= sort_link(@q, :role) %></th>
+          <th><%= sort_link(@q, :created_at, 'Join date') %></th>
+          <th><%= sort_link(@q, :status) %></th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @users.each do |user| %>
+          <%= content_tag :tr, id: dom_id(user), class: dom_class(user) do %>
+            <td><%= user.name %></td>
+            <td><%= user.email %></td>
+            <td><%= user.phone %></td>
+            <td><%= user.role %></td>
+            <td><%= format_timestamp(user.created_at) %></td>
+            <td><%= status_label(user.status) %></td>
+            <td><%= link_to 'Show', admin_user_path(user) %></td>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%== pagy_bootstrap_nav(@pagy) %>

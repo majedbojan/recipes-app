@@ -1,0 +1,28 @@
+<%= form_for(current_user, url: profile_path, method: :put, builder: ::FormBuilder) do |f| %>
+  <%= render_form_error(f.object.errors) %>
+
+  <div class="row mb-3">
+    <div class="col-12 col-md-6">
+      <%= f.label(:name) %>
+      <%= f.text_field(:name, class: 'form-control', required: true) %>
+    </div>
+  </div>
+
+  <div class="row mb-3">
+    <div class="col-12 col-md-6">
+      <%= f.label(:email) %>
+      <%= f.email_field(:email, class: 'form-control', required: true) %>
+    </div>
+
+    <div class="col-12 col-md-6">
+      <%= f.label(:phone) %>
+      <%= f.text_field(:phone, type: :tel, class: 'form-control', required: true) %>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col text-right">
+      <%= f.submit 'Save', name: nil, class: 'btn btn-success', data: { disable_with: 'Saving...' } %>
+    </div>
+  </div>
+<% end %>

@@ -1,0 +1,29 @@
+<div class="page-header flex-wrap flex-md-nowrap">
+  <h1 class="h2">tags</h1>
+</div>
+
+<div class="card mb-3">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead>
+        <tr>
+          <th>ID</th>
+          <th>Name</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @tags.each do |tag| %>
+          <%= content_tag :tr, id: dom_id(tag), class: dom_class(tag) do %>
+            <td><%= link_to(tag.id, admin_tag_path(tag)) %></td>
+            <td><%= tag.name %></td>
+            <td><%= link_to 'Show', admin_tag_path(tag) %></td>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%== pagy_bootstrap_nav(@pagy) if @pagy %>
