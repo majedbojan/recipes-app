@@ -10,10 +10,10 @@ class CreateRecipes < ActiveRecord::Migration[6.0]
       t.integer :difficulty, null: false
       t.integer :people_quantity
 
-      t.string  :name, null: false
+      t.string  :name,        null: false
       t.string  :prep_time,   null: false
       t.string  :cook_time,   null: false
-      t.string  :image_url,   null: false
+      t.string  :image_url
 
       t.timestamps
 

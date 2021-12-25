@@ -37,10 +37,10 @@ class User < ApplicationRecord
          :recoverable, :rememberable, :validatable, :trackable
 
   validates :name, presence: true
-  validates :phone,      phone: true, allow_nil: true
+  validates :phone, phone: true, allow_nil: true
 
   enum role: {
-    user: 0,
+    user:  0,
     admin: 1
   }
 

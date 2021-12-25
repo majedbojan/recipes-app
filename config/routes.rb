@@ -18,7 +18,7 @@ Rails.application.routes.draw do
                       }
 
   resource  :profile, only: %i[show update]
-  resources :tags, only: %i[show]
+  resources :recipe_requests, only: %i[create]
   resources :recipes, only: %i[index show] do
     member do
       get  :tag
@@ -28,9 +28,7 @@ Rails.application.routes.draw do
   namespace :admin do
     resources :dashboard, only:   %i[index]
     resources :users,     except: %i[new create]
-    resources :tags
     resources :recipes
-    resources :ingredients
     root to: redirect('admin/dashboard')
   end
 end

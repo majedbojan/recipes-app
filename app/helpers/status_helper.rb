@@ -14,7 +14,7 @@ module StatusHelper
     end
   end
 
-  def difficulty_label(difficulty)
-    tag.span(difficulty.humanize, class: "text-muted")
+  def enum_label(label)
+    tag.span(label.humanize, class: 'text-muted')
   end
 end

@@ -36,7 +36,7 @@ $ bin/setup
 $ rails db:seed
 ```
 
-Note: please be patient, seeding data may take around 2 mins as it's seeding around `157351` records in 5 tables
+Note: Total recipes are 9500, please feel free to import as less as you need by changing the `NO_OF_RECIPES` value in `db/seeds.rb`
 
 ### Branches
 
@@ -48,12 +48,10 @@ Note: `develop` is the base branch for development, git tree should be `develop`
 - `test`: Used to run unit test
 - `production`: End user environment.
 
-### Secrets and Keys
-
-We will be using rails credentials for secret keys, so please create `config/master.key` and set correct key.
-
 ### Test cases
-
+```powershell
+bundle exec rspec spec/
+```
 ### DB Design
 
 ```ruby

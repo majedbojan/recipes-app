@@ -1,0 +1,8 @@
+<div class="form-group nested-fields">
+  <div class="d-flex">
+    <%= form.hidden_field :_destroy %>
+    <%= form.hidden_field :id %>
+    <%= form.text_field :name, placeholder: 'Tag name', class: 'form-control mr-2' %>
+    <%= button_tag('X', type: :button, class: 'btn btn-danger small', data: { action: "click->nested-form#removeItem" }) %>
+  </div>
+</div>

@@ -25,7 +25,10 @@
         <tr>
           <th><%= sort_link(@q, :name) %></th>
           <th><%= sort_link(@q, :cook_time) %></th>
+          <th><%= sort_link(@q, :prep_time) %></th>
+          <th><%= sort_link(@q, :total_time) %></th>
           <th><%= sort_link(@q, :difficulty) %></th>
+          <th><%= sort_link(@q, :budget) %></th>
           <th><%= sort_link(@q, :status) %></th>
           <th></th>
         </tr>
@@ -36,7 +39,10 @@
           <%= content_tag :tr, id: dom_id(recipe), class: dom_class(recipe) do %>
             <td><%= recipe.name %></td>
             <td><%= recipe.cook_time %></td>
-            <td><%= difficulty_label(recipe.difficulty) %></td>
+            <td><%= recipe.prep_time %></td>
+            <td><%= recipe.total_time %></td>
+            <td><%= enum_label(recipe.difficulty) %></td>
+            <td><%= enum_label(recipe.budget) %></td>
             <td><%= status_label(recipe.status) %></td>
             <td><%= link_to 'Show', admin_recipe_path(recipe) %></td>
           <% end %>

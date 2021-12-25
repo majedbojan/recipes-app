@@ -8,7 +8,7 @@
 #  budget          :integer          not null
 #  cook_time       :string           not null
 #  difficulty      :integer          not null
-#  image_url       :string           not null
+#  image_url       :string
 #  name            :string           not null
 #  people_quantity :integer
 #  prep_time       :string           not null
@@ -29,15 +29,18 @@
 class Recipe < ApplicationRecord
   include Activatable
 
-  has_many   :recipe_tags, dependent: :destroy
-  has_many   :tags, through: :recipe_tags, dependent: :destroy
+  has_many   :tags, dependent: :destroy
+  has_many   :ingredients, dependent: :destroy
 
-  has_many   :recipe_ingredients, dependent: :destroy
-  has_many   :ingredients, through: :recipe_ingredients, dependent: :destroy
-  has_many   :comments, dependent: :destroy
+  has_many   :feedbacks, dependent: :destroy
+  accepts_nested_attributes_for :tags,
+                                allow_destroy: true,
+                                reject_if:     proc { |att| att['name'].blank? }
 
+  accepts_nested_attributes_for :ingredients,
+                                allow_destroy: true,
+                                reject_if:     proc { |att| att['name'].blank? }
   belongs_to :user, optional: true
-
   validates :name, presence: true
 
   enum budget: {
@@ -58,8 +61,7 @@ class Recipe < ApplicationRecord
   validates :difficulty, presence: true
   validates :prep_time, presence: true
 
-
-  scope :recipe_budget, ->(str) do
+  scope :recipe_budget, lambda { |str|
     case str
     when 'cheap'
       cheap
@@ -68,10 +70,22 @@ class Recipe < ApplicationRecord
     when 'quite_expensive'
       quite_expensive
     end
-  end
+  }
+
+  scope :recipe_difficulty, lambda { |str|
+    case str
+    when 'very_easy'
+      cheap
+    when 'easy'
+      average_cost
+    when 'average_level'
+      quite_expensive
+    when 'difficult'
+    end
+  }
 
   def self.ransackable_scopes(_auth_object = nil)
-    [:recipe_budget]
+    [:recipe_budget, :recipe_difficulty]
   end
 
   def rate_percentage
@@ -79,7 +93,7 @@ class Recipe < ApplicationRecord
   end
 
   def total_time
-    25
+    # cook_time + prep_time
   end
 
   def budget_fr
@@ -88,6 +102,10 @@ class Recipe < ApplicationRecord
 
   def difficulty_fr
     I18n.t("difficulty.#{difficulty}", locale: :fr)
+  end
+
+  def author_name
+    user&.name || 'admin'
   end
 
   # private

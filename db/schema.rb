@@ -61,28 +61,12 @@ ActiveRecord::Schema.define(version: 2021_12_23_005209) do
   end
 
   create_table "ingredients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "recipe_id"
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_ingredients_on_name"
-  end
-
-  create_table "recipe_ingredients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "recipe_id"
-    t.uuid "ingredient_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["ingredient_id"], name: "index_recipe_ingredients_on_ingredient_id"
-    t.index ["recipe_id"], name: "index_recipe_ingredients_on_recipe_id"
-  end
-
-  create_table "recipe_tags", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "recipe_id"
-    t.uuid "tag_id"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["recipe_id"], name: "index_recipe_tags_on_recipe_id"
-    t.index ["tag_id"], name: "index_recipe_tags_on_tag_id"
+    t.index ["recipe_id"], name: "index_ingredients_on_recipe_id"
   end
 
   create_table "recipes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -94,7 +78,7 @@ ActiveRecord::Schema.define(version: 2021_12_23_005209) do
     t.string "name", null: false
     t.string "prep_time", null: false
     t.string "cook_time", null: false
-    t.string "image_url", null: false
+    t.string "image_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["status"], name: "index_recipes_on_status"
@@ -102,10 +86,12 @@ ActiveRecord::Schema.define(version: 2021_12_23_005209) do
   end
 
   create_table "tags", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
+    t.uuid "recipe_id"
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["name"], name: "index_tags_on_name"
+    t.index ["recipe_id"], name: "index_tags_on_recipe_id"
   end
 
   create_table "users", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
@@ -133,9 +119,7 @@ ActiveRecord::Schema.define(version: 2021_12_23_005209) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "feedbacks", "recipes", on_delete: :nullify
   add_foreign_key "feedbacks", "users", on_delete: :nullify
-  add_foreign_key "recipe_ingredients", "ingredients", on_delete: :nullify
-  add_foreign_key "recipe_ingredients", "recipes", on_delete: :nullify
-  add_foreign_key "recipe_tags", "recipes", on_delete: :nullify
-  add_foreign_key "recipe_tags", "tags", on_delete: :nullify
+  add_foreign_key "ingredients", "recipes", on_delete: :nullify
   add_foreign_key "recipes", "users", on_delete: :nullify
+  add_foreign_key "tags", "recipes", on_delete: :nullify
 end

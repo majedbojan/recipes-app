@@ -25,7 +25,6 @@ module Admin
     # POST /recipes
     def create
       @recipe = Recipe.new(recipe_params)
-
       if @recipe.save
         redirect_to admin_recipe_path(@recipe), notice: 'Recipe was successfully created.'
       else
@@ -59,7 +58,16 @@ module Admin
     def recipe_params
       params.require(:recipe)
             .permit(
-              :name
+              :name,
+              :budget,
+              :status,
+              :cook_time,
+              :image_url,
+              :prep_time,
+              :difficulty,
+              :people_quantity,
+              tags_attributes:        %i[id name _destroy],
+              ingredients_attributes: %i[id name _destroy]
             )
     end
   end

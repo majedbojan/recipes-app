@@ -28,15 +28,14 @@ class Feedback < ApplicationRecord
   belongs_to :recipe
   belongs_to :user, optional: true
 
-  validates :recipe, presence: true, uniqueness: { case_sensitive: false, message: :rate_uniqueness }
+  has_rich_text :comment
+
+  validates :recipe, presence: true, uniqueness: { case_sensitive: false }
+  validates :user, presence: true, uniqueness: { case_sensitive: false }
 
   validates :rating,
             presence:     true,
             numericality: { only_integer:             true,
                             greater_than_or_equal_to: 1,
                             less_than_or_equal_to:    5 }
-
-  has_rich_text :comment
-  belongs_to :recipe_id
-  belongs_to :user, optional: true
 end

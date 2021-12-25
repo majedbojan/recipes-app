@@ -14,9 +14,9 @@ module AdminHelper
   end
 
   def recipe_time_options
-    (0..(24.hours)).step(30.minutes).to_a.map do |t|
-      l(Time.zone.at(t), format: :time_only)
-    end
+    (0..(10.hours)).step(10.minutes).to_a.drop(1).map do |t|
+      distance_of_time_in_words(t)
+    end.uniq
   end
 
   def recipe_search_budget_options
@@ -25,6 +25,17 @@ module AdminHelper
       %w[Cheap cheap],
       %w[Average average_cost],
       %w[Expensive quite_expensive]
+
+    ]
+  end
+
+  def recipe_search_difficulty_options
+    [
+      ['All', ''],
+      ['Very easy', 'very_easy'],
+      %w[easy easy],
+      ['Average level' 'average_level'],
+      %w[difficult Difficult]
 
     ]
   end

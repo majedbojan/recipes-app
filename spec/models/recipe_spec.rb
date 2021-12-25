@@ -8,7 +8,7 @@
 #  budget          :integer          not null
 #  cook_time       :string           not null
 #  difficulty      :integer          not null
-#  image_url       :string           not null
+#  image_url       :string
 #  name            :string           not null
 #  people_quantity :integer
 #  prep_time       :string           not null

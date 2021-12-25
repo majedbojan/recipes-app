@@ -1,0 +1,31 @@
+<div class="page-header flex-wrap flex-md-nowrap">
+  <h1 class="h2">Recipe_requests</h1>
+
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <%= link_to "Add New Recipe request", new_recipe_request_path, class: 'btn btn-primary btn-sm' %>
+  </div>
+</div>
+
+<div class="card mb-3">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead>
+        <tr>
+          <th>New</th>
+          <th></th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @recipe_requests.each do |recipe_request| %>
+          <%= content_tag :tr, id: dom_id(recipe_request), class: dom_class(recipe_request) do %>
+            <td><%= recipe_request.new %></td>
+            <td><%= link_to 'Show', recipe_request %></td>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%%== pagy_bootstrap_nav(@pagy) if @pagy %>

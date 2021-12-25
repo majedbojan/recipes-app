@@ -1,0 +1,38 @@
+<%= form_with(model: recipe_request, local: true, builder: ::FormBuilder) do |form| %>
+  <div class="card mb-4">
+    <div class="card-body">
+      <% if recipe_request.errors.any? %>
+        <div id="error_explanation" class="alert alert-danger">
+          <h2 class="h4"><%= pluralize(recipe_request.errors.count, "error") %> prohibited this recipe_request from being saved:</h2>
+
+          <ul>
+          <% recipe_request.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+          <div class="form-group">
+            <%= form.label :new %>
+        <%= form.text_field :new, class: 'form-control' %>
+          </div>
+
+        <div class="form-group mb-0">
+        <% if recipe_request.persisted? %>
+          <div class="float-right">
+            <%= link_to 'Destroy', recipe_request, method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' } %>
+          </div>
+        <% end %>
+
+        <%= form.submit class: 'btn btn-primary' %>
+
+        <% if recipe_request.persisted? %>
+          <%= link_to "Cancel", recipe_request, class: "btn btn-link" %>
+        <% else %>
+          <%= link_to "Cancel", recipe_requests_path, class: "btn btn-link" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

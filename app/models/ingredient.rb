@@ -8,11 +8,18 @@
 #  name       :string           not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  recipe_id  :uuid
 #
 # Indexes
 #
-#  index_ingredients_on_name  (name)
+#  index_ingredients_on_name       (name)
+#  index_ingredients_on_recipe_id  (recipe_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (recipe_id => recipes.id) ON DELETE => nullify
 #
 class Ingredient < ApplicationRecord
-  has_many :recipe_ingredients, dependent: :destroy
+  belongs_to :recipe, dependent: :destroy
+  validates :name, presence: true, uniqueness: { scope: :recipe_id }
 end
