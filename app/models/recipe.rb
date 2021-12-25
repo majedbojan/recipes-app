@@ -85,7 +85,7 @@ class Recipe < ApplicationRecord
   }
 
   def self.ransackable_scopes(_auth_object = nil)
-    [:recipe_budget, :recipe_difficulty]
+    %i[recipe_budget recipe_difficulty]
   end
 
   def rate_percentage

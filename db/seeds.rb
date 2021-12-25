@@ -46,32 +46,28 @@ Recipe.insert_all(recipes_params)
 ## ----------------------------------------------------------------------------- ##
 
 ## Tags
-# tags = recipes.map { |recipe| recipe['tags'] }.flatten.uniq.compact.map { |tag| { name: tag }.merge(basic_params) }
-# Tag.insert_all(tags)
-
-## ----------------------------------------------------------------------------- ##
-# Recipe Tags
-# recipes.map do |recipe|
-#   find_recipe = Recipe.find_by(name: recipe['name'])
-#   find_tags = Tag.where(name: recipe['tags']).ids
-#   recipe_tags_params = find_tags.map { |tag_id| {recipe_id: find_recipe.id, tag_id: tag_id}.merge(basic_params) }
-#   RecipeTag.insert_all(recipe_tags_params)
-# end
+Recipe.all.each do |recipe|
+  find_recipe = recipes.find { |r| r['name'] == recipe.name }
+  if find_recipe && find_recipe['tags']
+    tag_params = find_recipe['tags'].map { |tag| { name: tag, recipe_id: recipe.id }.merge(basic_params) }
+    Tag.insert_all(tag_params)
+  end
+end
 ## ----------------------------------------------------------------------------- ##
 
 ## Ingredients
-# ingredients = recipes.map { |recipe| recipe['ingredients'] }.flatten.uniq.compact.map do |ingredient|
-#   { name: ingredient.to_s }.merge(basic_params)
-# end
+Recipe.all.each do |recipe|
+  find_recipe = recipes.find { |r| r['name'] == recipe.name }
+  next unless find_recipe && find_recipe['ingredients']
 
-# Ingredient.insert_all(ingredients)
+  ingredient_params = find_recipe['ingredients'].map do |ingredient|
+    { name: ingredient, recipe_id: recipe.id }.merge(basic_params)
+  end
+  Ingredient.insert_all(ingredient_params)
+end
 
 ## ----------------------------------------------------------------------------- ##
 
-# Recipe Ingredients
-# recipes.map do |recipe|
-#   find_recipe = Recipe.find_by(name: recipe['name'])
-#   find_Ingredients = Ingredient.where(name: recipe['ingredients']).ids
-#   recipe_Ingredients_params = find_Ingredients.map { |ingredient_id| {recipe_id: find_recipe.id, ingredient_id: ingredient_id}.merge(basic_params) }
-#   RecipeIngredient.insert_all(recipe_Ingredients_params)
-# end
+## Feedbacks
+
+rand(1...5)
