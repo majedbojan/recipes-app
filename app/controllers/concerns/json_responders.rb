@@ -24,19 +24,19 @@ module JsonResponders
     render_smart_error(error: error, status: :forbidden, **options)
   end
 
-  def render_unprocessable_entity(error: 1103, **options)
-    render_smart_error(error: error, status: :unprocessable_entity, **options)
+  def render_unprocessable_entity(message:, error: 1103)
+    render_smart_error(error: error, message: message, status: :unprocessable_entity)
   end
 
   def render_not_found(error: 1105, **options)
     render_smart_error(error: error, status: :not_found, **options)
   end
 
-  def render_smart_error(error:, **options)
+  def render_smart_error(error:, message: '', status: :bad_request, **_options)
     render(json: {
-             error_code: options[:error_code],
-             message:    options[:message],
-             status:     (options[:status] || :bad_request)
+             error:   error,
+             message: message,
+             status:  status
            })
   end
 end

@@ -27,7 +27,7 @@ budgets = { 'bon marché' => 'cheap', 'Coût moyen' => 'average_cost', 'assez ch
 difficulties = { 'très facile' => 'very_easy', 'Niveau moyen' => 'easy', 'facile' => 'average_level',
 'difficile' => 'difficult' }
 
-user_authors = users = User.pluck(:name, :id).to_h
+user_authors = User.pluck(:name, :id).to_h
 recipes_params = recipes.map do |recipe|
   {
     budget:          budgets[recipe['budget']],
@@ -45,19 +45,14 @@ Recipe.insert_all(recipes_params)
 
 ## ----------------------------------------------------------------------------- ##
 
-## Tags
 Recipe.all.each do |recipe|
   find_recipe = recipes.find { |r| r['name'] == recipe.name }
+  ## Tags
   if find_recipe && find_recipe['tags']
     tag_params = find_recipe['tags'].map { |tag| { name: tag, recipe_id: recipe.id }.merge(basic_params) }
     Tag.insert_all(tag_params)
   end
-end
-## ----------------------------------------------------------------------------- ##
 
-## Ingredients
-Recipe.all.each do |recipe|
-  find_recipe = recipes.find { |r| r['name'] == recipe.name }
   next unless find_recipe && find_recipe['ingredients']
 
   ingredient_params = find_recipe['ingredients'].map do |ingredient|

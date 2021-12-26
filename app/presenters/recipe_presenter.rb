@@ -12,6 +12,7 @@ module RecipePresenter
       t.add :image_url
       t.add :author_name
       t.add :rate_percentage
+      t.add :status
     end
 
     ## ----------------------- Consumer Response ---------------------- ##

@@ -30,8 +30,8 @@ class Feedback < ApplicationRecord
 
   has_rich_text :comment
 
-  validates :recipe, presence: true, uniqueness: { case_sensitive: false }
-  validates :user, presence: true, uniqueness: { case_sensitive: false }
+  # validates :recipe, presence: true, uniqueness: { case_sensitive: false }
+  # validates :user, presence: true, uniqueness: { case_sensitive: false }
 
   validates :rating,
             presence:     true,

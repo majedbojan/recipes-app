@@ -47,17 +47,8 @@ module Api
       # Set Current User and Access type or reject the request if user is forbidden
       def set_curret_user_with_access
         @current_user = @token[:user]
-        # @access       = @token[:access]
-        # Current.user = @current_user
-        # Use 1201 so mobile will automatically redirect diactivated users to login screen &&  # reject inactive/disabled users
-        return render_forbidden(error: 1201, message: I18n.t('errors.1305')) unless @current_user.active?
+        return render_forbidden(error: 1201, message: I18n.t('errors.1305')) if @current_user.inactive?
       end
-
-      # Const.role.keys.each do |r|
-      #   define_method "#{r}?" do
-      #     current_user.send("#{r}?")
-      #   end
-      # end
     end
   end
 end

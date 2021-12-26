@@ -19,15 +19,15 @@
 #
 # Indexes
 #
-#  index_recipes_on_status   (status)
-#  index_recipes_on_user_id  (user_id)
+#  index_recipes_on_LOWER_name  (lower((name)::text)) UNIQUE
+#  index_recipes_on_status      (status)
+#  index_recipes_on_user_id     (user_id)
 #
 # Foreign Keys
 #
 #  fk_rails_...  (user_id => users.id) ON DELETE => nullify
 #
 class Recipe < ApplicationRecord
-  include Activatable
   include RecipePresenter
 
   has_many   :tags, dependent: :destroy
@@ -43,10 +43,10 @@ class Recipe < ApplicationRecord
                                 reject_if:     proc { |att| att['name'].blank? }
   belongs_to :user, optional: true
 
+  validates :name, presence: true, uniqueness: true
   validates :budget, presence: true
   validates :cook_time, presence: true
   validates :difficulty, presence: true
-  validates :name, presence: true
   validates :people_quantity, presence: true
   validates :prep_time, presence: true
 
@@ -62,7 +62,11 @@ class Recipe < ApplicationRecord
     average_level: 2,
     difficult:     3
   }
-
+  enum status: {
+    pending:  0,
+    active:   1,
+    inactive: 2
+  }
   scope :recipe_budget, lambda { |str|
     case str
     when 'cheap'

@@ -7,6 +7,8 @@ Recipes is an application that helps you find a recipe that you can prepare with
 - People who are proficient cooks and are just looking for an inspiration and new ideas
 - People who are in need of guidance with cooking
 
+## Scope
+
 # Developer Guide
 
 ## Requirements

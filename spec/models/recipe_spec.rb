@@ -19,8 +19,9 @@
 #
 # Indexes
 #
-#  index_recipes_on_status   (status)
-#  index_recipes_on_user_id  (user_id)
+#  index_recipes_on_LOWER_name  (lower((name)::text)) UNIQUE
+#  index_recipes_on_status      (status)
+#  index_recipes_on_user_id     (user_id)
 #
 # Foreign Keys
 #
@@ -40,13 +41,13 @@ RSpec.describe Recipe, type: :model do
     it { is_expected.to validate_presence_of(:people_quantity) }
 
     it {
-      expect(subject).to define_enum_for(:difficulty).with_values(very_easy: 0, easy: 1, average_level: 2, difficult: 3)
+      expect(recipe).to define_enum_for(:difficulty).with_values(very_easy: 0, easy: 1, average_level: 2, difficult: 3)
     }
 
     it {
-      expect(subject).to define_enum_for(:budget).with_values(cheap:           0,
-                                                              average_cost:    1,
-                                                              quite_expensive: 2)
+      expect(recipe).to define_enum_for(:budget).with_values(cheap:           0,
+                                                             average_cost:    1,
+                                                             quite_expensive: 2)
     }
   end
 end

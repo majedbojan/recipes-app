@@ -47,6 +47,9 @@ module Api
         @collection ||= build_collection.includes(:user)
       end
 
+      def params_processed
+        resource_params.merge(status: 'pending')
+      end
       # Custom ordering and sorting
       # def get_order; end
     end

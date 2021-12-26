@@ -12,8 +12,8 @@
 #
 # Indexes
 #
-#  index_tags_on_name       (name)
-#  index_tags_on_recipe_id  (recipe_id)
+#  index_tags_on_name_and_recipe_id  (name,recipe_id) UNIQUE
+#  index_tags_on_recipe_id           (recipe_id)
 #
 # Foreign Keys
 #
@@ -23,6 +23,4 @@ class Tag < ApplicationRecord
   include TagPresenter
   belongs_to :recipe, dependent: :destroy
   validates :name, presence: true, uniqueness: { scope: :recipe_id }
-
-  # Validate uniqness of recipe with tag TODO
 end

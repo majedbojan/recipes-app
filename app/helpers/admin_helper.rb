@@ -34,7 +34,7 @@ module AdminHelper
       ['All', ''],
       ['Very easy', 'very_easy'],
       %w[easy easy],
-      ['Average level' 'average_level'],
+      ['Average level', 'average_level'],
       %w[difficult Difficult]
 
     ]

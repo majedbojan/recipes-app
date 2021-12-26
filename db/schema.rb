@@ -65,7 +65,7 @@ ActiveRecord::Schema.define(version: 2021_12_23_005209) do
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["name"], name: "index_ingredients_on_name"
+    t.index ["name", "recipe_id"], name: "index_ingredients_on_name_and_recipe_id", unique: true
     t.index ["recipe_id"], name: "index_ingredients_on_recipe_id"
   end
 
@@ -81,6 +81,7 @@ ActiveRecord::Schema.define(version: 2021_12_23_005209) do
     t.string "image_url"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index "lower((name)::text)", name: "index_recipes_on_LOWER_name", unique: true
     t.index ["status"], name: "index_recipes_on_status"
     t.index ["user_id"], name: "index_recipes_on_user_id"
   end
@@ -90,7 +91,7 @@ ActiveRecord::Schema.define(version: 2021_12_23_005209) do
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["name"], name: "index_tags_on_name"
+    t.index ["name", "recipe_id"], name: "index_tags_on_name_and_recipe_id", unique: true
     t.index ["recipe_id"], name: "index_tags_on_recipe_id"
   end
 

@@ -32,13 +32,12 @@ module Api
 
       # POST : /v2/{resource}/:id
       def create
-        find_resource(scope.new(params_processed))
+        resource = resource_class.new(params_processed)
         if resource.save
           data = { show_key => resource.as_api_response(show_template, template_injector) }
-          # yield data if block_given?
           render_created(data: data, message: created_message)
         else
-          render_unprocessable_entity(error: resource)
+          render_unprocessable_entity(message: resource.errors.full_messages.to_sentence)
         end
       end
 

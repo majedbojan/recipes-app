@@ -4,6 +4,7 @@ require 'rails_helper'
 
 RSpec.describe 'Api::V1::Recipes', type: :request do
   let!(:endpoint) { '/api/v1/recipes' }
+
   let!(:recipe) { create(:recipe) }
   let!(:second_recipe) { create(:recipe) }
   let!(:tag) { create(:tag, recipe: second_recipe) }
@@ -28,11 +29,13 @@ RSpec.describe 'Api::V1::Recipes', type: :request do
                                                 { 'id'              => second_recipe.id,
                                                   'name'            => second_recipe.name,
                                                   'image_url'       => nil,
+                                                  'status'          => 'active',
                                                   'author_name'     => second_recipe.author_name,
                                                   'rate_percentage' => 200.0 },
                                                 {
                                                   'id'              => recipe.id,
                                                   'name'            => recipe.name,
+                                                  'status'          => 'active',
                                                   'image_url'       => nil,
                                                   'author_name'     => recipe.author_name,
                                                   'rate_percentage' => 200.0
@@ -51,6 +54,7 @@ RSpec.describe 'Api::V1::Recipes', type: :request do
         expect(data_response[:recipes]).to eq([
                                                 { 'id'              => second_recipe.id,
                                                   'name'            => second_recipe.name,
+                                                  'status'          => 'active',
                                                   'image_url'       => nil,
                                                   'author_name'     => second_recipe.author_name,
                                                   'rate_percentage' => 200.0 }
@@ -62,6 +66,7 @@ RSpec.describe 'Api::V1::Recipes', type: :request do
         expect(data_response[:recipes]).to eq([
                                                 { 'id'              => second_recipe.id,
                                                   'name'            => second_recipe.name,
+                                                  'status'          => 'active',
                                                   'image_url'       => nil,
                                                   'author_name'     => second_recipe.author_name,
                                                   'rate_percentage' => 200.0 }
@@ -91,6 +96,7 @@ RSpec.describe 'Api::V1::Recipes', type: :request do
                                                'cook_time'       => '10 min',
                                                'difficulty'      => 'easy',
                                                'difficulty_fr'   => 'Niveau moyen',
+                                               'status'          => 'active',
                                                'feedbacks'       => [],
                                                'id'              => second_recipe.id,
                                                'image_url'       => nil,
@@ -122,5 +128,52 @@ RSpec.describe 'Api::V1::Recipes', type: :request do
   end
 
   describe 'POST /create' do
+    let!(:valid_params) do
+      { recipe: {
+        name:            'Tasty Chicken baryani',
+        budget:          'average_cost',
+        cook_time:       '20 minutes',
+        image_url:       ' ',
+        prep_time:       '20 minutes',
+        difficulty:      'average_level',
+        people_quantity: '1'
+      } }
+    end
+
+    context 'when success' do
+      before do
+        post(endpoint, params: valid_params)
+      end
+
+      it 'returns success' do
+        expect(response).to have_http_status(:ok)
+      end
+
+      it 'returns success message' do
+        expect(message_response).to eq('Recipe created successfully')
+      end
+
+      it 'crates `Tasty Chicken baryani` recipe' do
+        expect(data_response[:recipe][:name]).to eq('Tasty Chicken baryani')
+      end
+
+      it 'must create a recipe with pending status' do
+        expect(data_response[:recipe][:status]).to eq('pending')
+      end
+    end
+
+    context 'when failure' do
+      it 'returns missing name' do
+        valid_params[:recipe].delete(:name)
+        post(endpoint, params: valid_params)
+        expect(message_response).to eq("Name can't be blank")
+      end
+
+      it 'does not processs the entity' do
+        valid_params[:recipe].delete(:name)
+        post(endpoint, params: valid_params)
+        expect(status_response).to eq('unprocessable_entity')
+      end
+    end
   end
 end

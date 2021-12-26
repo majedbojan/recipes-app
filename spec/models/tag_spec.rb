@@ -12,8 +12,8 @@
 #
 # Indexes
 #
-#  index_tags_on_name       (name)
-#  index_tags_on_recipe_id  (recipe_id)
+#  index_tags_on_name_and_recipe_id  (name,recipe_id) UNIQUE
+#  index_tags_on_recipe_id           (recipe_id)
 #
 # Foreign Keys
 #

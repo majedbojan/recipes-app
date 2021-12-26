@@ -6,15 +6,11 @@ module ExceptionHandler
   included do
     # Handle all exceptions
     rescue_from StandardError,                     with: :server_error!
-    # rescue_from JWT::VerificationError,            with: :jwt_verification_error!
-    # rescue_from JWT::DecodeError,                  with: :jwt_decode_error!
-    # rescue_from JWT::ExpiredSignature,             with: :jwt_expired_signature!
     rescue_from I18n::InvalidLocale,               with: :i18n_invalid_locale!
     rescue_from ActiveRecord::RecordNotFound,      with: :record_not_found!
     rescue_from ActiveRecord::InvalidForeignKey,   with: :foreign_key_not_found!
     rescue_from CustomException::AuthUserNotFound, with: :auth_user_not_found!
     rescue_from CustomException::AuthServiceError, with: :auth_service_error!
-    # rescue_from Rack::Timeout::RequestTimeoutException, with: :request_timeout!
     rescue_from ActionController::ParameterMissing, with: :missing_params!
   end
 
@@ -75,10 +71,10 @@ module ExceptionHandler
   end
 
   # Handle StandardError
-  def server_error!(e)
-    Rails.logger.error(e.message)
+  def server_error!(error)
+    Rails.logger.error(error.message)
 
-    e.backtrace.each do |line|
+    error.backtrace.each do |line|
       Rails.logger.error(line)
     end
 
@@ -86,8 +82,8 @@ module ExceptionHandler
              {}
            else
              {
-               error:     e.message,
-               backtrace: e.backtrace
+               error:     error.message,
+               backtrace: error.backtrace
              }
            end
 

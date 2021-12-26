@@ -29,8 +29,6 @@
 #  index_users_on_status                (status)
 #
 class User < ApplicationRecord
-  include Activatable
-
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -44,21 +42,14 @@ class User < ApplicationRecord
     admin: 1
   }
 
+  enum status: {
+    inactive: 0,
+    active:   1
+  }
   # Only login active users
   def self.find_for_authentication(tainted_conditions)
     find_first_by_auth_conditions(tainted_conditions, status: :active)
   end
 
   ransack_alias :search, :name_or_email_or_phone
-
-  # ransacker :name, formatter: proc { |v| v.mb_chars.downcase.to_s } do |parent|
-  #   Arel::Nodes::NamedFunction.new(
-  #     'concat',
-  #     [
-  #       parent.table[:first_name],
-  #       Arel::Nodes.build_quoted(' '),
-  #       parent.table[:last_name]
-  #     ]
-  #   )
-  # end
 end

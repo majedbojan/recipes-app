@@ -8,7 +8,7 @@ class CreateTags < ActiveRecord::Migration[6.0]
 
       t.timestamps
 
-      t.index :name
+      t.index(%i[name recipe_id], unique: true)
     end
   end
 end

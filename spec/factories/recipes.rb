@@ -19,8 +19,9 @@
 #
 # Indexes
 #
-#  index_recipes_on_status   (status)
-#  index_recipes_on_user_id  (user_id)
+#  index_recipes_on_LOWER_name  (lower((name)::text)) UNIQUE
+#  index_recipes_on_status      (status)
+#  index_recipes_on_user_id     (user_id)
 #
 # Foreign Keys
 #

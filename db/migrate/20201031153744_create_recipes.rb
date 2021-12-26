@@ -18,6 +18,7 @@ class CreateRecipes < ActiveRecord::Migration[6.0]
       t.timestamps
 
       t.index :status
+      t.index 'LOWER(name)', unique: true
     end
   end
 end
