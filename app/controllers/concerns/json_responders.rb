@@ -12,8 +12,8 @@ module JsonResponders
   end
 
   ## Error Responders
-  def render_bad_request(error: 1000, **options)
-    render_smart_error(error: error, **options)
+  def render_bad_request(error: 1000, message: '', **options)
+    render_smart_error(error: error, message: message, **options)
   end
 
   def render_unauthorized(error: 1101, **options)

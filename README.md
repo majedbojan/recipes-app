@@ -9,13 +9,17 @@ Recipes is an application that helps you find a recipe that you can prepare with
 
 ## Scope
 
+### Admin (Admin pannel)
+
+### Consumer (Web and API's)
+
 # Developer Guide
 
-## Requirements
+## Dependencies
 
 - Ruby 3.0.1
 - PostgreSQL 14+
-- Redis 6+
+- Node
 
 ### Setup
 
@@ -42,18 +46,20 @@ Note: Total recipes are 9500, please feel free to import as less as you need by 
 
 ### Branches
 
-Note: `develop` is the base branch for development, git tree should be `develop` -> `main`
+Note: `develop` is the base branch for development, git tree should be `develop` -> `master`
 
-### Environemtn
+### Environemtens
 
 - `development`: Development environment
-- `test`: Used to run unit test
+- `test`: Used for unit test
 - `production`: End user environment.
 
 ### Test cases
+
 ```powershell
 bundle exec rspec spec/
 ```
+
 ### DB Design
 
 ```ruby

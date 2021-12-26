@@ -9,8 +9,8 @@
 #  rating     :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  recipe_id  :uuid
-#  user_id    :uuid
+#  recipe_id  :uuid             not null
+#  user_id    :uuid             not null
 #
 # Indexes
 #
@@ -25,17 +25,22 @@
 #  fk_rails_...  (user_id => users.id) ON DELETE => nullify
 #
 class Feedback < ApplicationRecord
+  include FeedbackPresenter
   belongs_to :recipe
   belongs_to :user, optional: true
 
   has_rich_text :comment
-
-  # validates :recipe, presence: true, uniqueness: { case_sensitive: false }
-  # validates :user, presence: true, uniqueness: { case_sensitive: false }
 
   validates :rating,
             presence:     true,
             numericality: { only_integer:             true,
                             greater_than_or_equal_to: 1,
                             less_than_or_equal_to:    5 }
+
+  validates :recipe, presence: true
+  validates :user, presence: true
+
+  def body
+    JSON.parse(comment.body.to_json)
+  end
 end

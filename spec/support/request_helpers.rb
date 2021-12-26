@@ -24,20 +24,12 @@ module RequestHelpers
   def status_response
     json_response[:status]
   end
-  # module AuthHelpers
-  # def auth_headers(user)
-  #   api_token = ApiToken.create(user: user)
-  #   {
-  #     'Accept' => 'application/json',
-  #     'Access-Token' => api_token.access_token,
-  #     'Content_type' => 'application/json',
-  #     'slug' => user.organization.slug
-  #   }
-  # end
 
-  # def basic_auth_value(username, password)
-  #   credentials = Base64.encode64("#{username}:#{password}")
-  #   "Basic #{credentials}".gsub("\n", "")
-  # end
-  # end
+  def generate_token(user)
+    JWT.encode(user.login_payload, Rails.application.credentials.secret_key_base, 'HS256')
+  end
+
+  def request_headers(user)
+    { 'Authorization' => generate_token(user) }
+  end
 end

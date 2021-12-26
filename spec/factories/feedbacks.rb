@@ -9,8 +9,8 @@
 #  rating     :integer          not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  recipe_id  :uuid
-#  user_id    :uuid
+#  recipe_id  :uuid             not null
+#  user_id    :uuid             not null
 #
 # Indexes
 #

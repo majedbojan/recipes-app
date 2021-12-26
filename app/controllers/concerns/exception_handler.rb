@@ -12,6 +12,7 @@ module ExceptionHandler
     rescue_from CustomException::AuthUserNotFound, with: :auth_user_not_found!
     rescue_from CustomException::AuthServiceError, with: :auth_service_error!
     rescue_from ActionController::ParameterMissing, with: :missing_params!
+    rescue_from CustomException::BadRequestError, with: :bad_request!
   end
 
   # The message of record not found, can be customized by override it to the controllers
@@ -68,6 +69,10 @@ module ExceptionHandler
   # Handle ActionController::ParameterMissing
   def missing_params!(err)
     render_unprocessable_entity(message: err.message)
+  end
+
+  def bad_request!(err)
+    render_bad_request(message: err.message)
   end
 
   # Handle StandardError

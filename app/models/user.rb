@@ -29,6 +29,8 @@
 #  index_users_on_status                (status)
 #
 class User < ApplicationRecord
+  include UserPresenter
+
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable, and :omniauthable
   devise :database_authenticatable, :registerable,
@@ -46,9 +48,27 @@ class User < ApplicationRecord
     inactive: 0,
     active:   1
   }
+
+  def self.login(email, password)
+    user = User.find_for_authentication(email: email.downcase)
+    return false if user.blank? || user.encrypted_password.nil?
+    return user if user.valid_password?(password)
+
+    false
+  end
+
   # Only login active users
   def self.find_for_authentication(tainted_conditions)
     find_first_by_auth_conditions(tainted_conditions, status: :active)
+  end
+
+  def login_payload
+    {
+      id:    id,
+      name:  name,
+      role:  role,
+      email: email
+    }
   end
 
   ransack_alias :search, :name_or_email_or_phone

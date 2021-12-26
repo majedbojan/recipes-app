@@ -3,7 +3,7 @@
 class CreateRecipes < ActiveRecord::Migration[6.0]
   def change
     create_table :recipes, id: :uuid do |t|
-      t.references :user, null: true, foreign_key: { on_delete: :nullify }, type: :uuid
+      t.references :user, null: false, foreign_key: { on_delete: :nullify }, type: :uuid
 
       t.integer :status,     null: false, default: 1
       t.integer :budget,     null: false

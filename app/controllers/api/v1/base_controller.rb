@@ -50,7 +50,7 @@ module Api
           # yield data if block_given?
           render_success(data: data, message: updated_message)
         else
-          render_unprocessable_entity(error: resource)
+          render_unprocessable_entity(message: resource.errors.full_messages.to_sentence)
         end
       end
 
@@ -61,7 +61,7 @@ module Api
         if resource.destroy
           render_success(message: destroyed_message)
         else
-          render_unprocessable_entity(error: resource)
+          render_unprocessable_entity(message: resource.errors.full_messages.to_sentence)
         end
       end
 

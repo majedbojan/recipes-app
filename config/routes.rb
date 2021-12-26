@@ -38,6 +38,7 @@ Rails.application.routes.draw do
       end
       resources :tags, only: :index
       resources :ingredients, only: :index
+      resources :sessions, only: :create
     end
   end
 end

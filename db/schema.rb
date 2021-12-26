@@ -48,8 +48,8 @@ ActiveRecord::Schema.define(version: 2021_12_23_005209) do
   end
 
   create_table "feedbacks", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "user_id"
-    t.uuid "recipe_id"
+    t.uuid "user_id", null: false
+    t.uuid "recipe_id", null: false
     t.integer "rating", null: false
     t.text "comment"
     t.datetime "created_at", precision: 6, null: false
@@ -61,7 +61,7 @@ ActiveRecord::Schema.define(version: 2021_12_23_005209) do
   end
 
   create_table "ingredients", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "recipe_id"
+    t.uuid "recipe_id", null: false
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -70,7 +70,7 @@ ActiveRecord::Schema.define(version: 2021_12_23_005209) do
   end
 
   create_table "recipes", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "user_id"
+    t.uuid "user_id", null: false
     t.integer "status", default: 1, null: false
     t.integer "budget", null: false
     t.integer "difficulty", null: false
@@ -87,7 +87,7 @@ ActiveRecord::Schema.define(version: 2021_12_23_005209) do
   end
 
   create_table "tags", id: :uuid, default: -> { "gen_random_uuid()" }, force: :cascade do |t|
-    t.uuid "recipe_id"
+    t.uuid "recipe_id", null: false
     t.string "name", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false

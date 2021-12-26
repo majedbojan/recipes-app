@@ -6,6 +6,7 @@ RSpec.describe 'Api::V1::Recipes', type: :request do
   let!(:endpoint) { '/api/v1/recipes' }
 
   let!(:recipe) { create(:recipe) }
+  let!(:user) { create(:user) }
   let!(:second_recipe) { create(:recipe) }
   let!(:tag) { create(:tag, recipe: second_recipe) }
   let!(:ingredient) { create(:ingredient, recipe: second_recipe) }
@@ -142,7 +143,7 @@ RSpec.describe 'Api::V1::Recipes', type: :request do
 
     context 'when success' do
       before do
-        post(endpoint, params: valid_params)
+        post(endpoint, params: valid_params, headers: request_headers(user))
       end
 
       it 'returns success' do

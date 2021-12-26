@@ -3,12 +3,19 @@
 module Api
   module V1
     class RecipesController < Api::V1::BaseController
+      before_action :authenticate_user!, only: :create
+
       ## ------------------------------------------------------------ ##
 
       # GET : api/v1/recipes/
       # Inherited from Api::V1::BaseController
       # def index; end
 
+      ## ------------------------------------------------------------ ##
+
+      # GET : api/v1/recipes/:id
+      # Inherited from Api::V1::BaseController
+      # def show; end
       ## ------------------------------------------------------------ ##
 
       # POST : api/v1/recipes/
