@@ -20,6 +20,9 @@
 #  fk_rails_...  (recipe_id => recipes.id) ON DELETE => nullify
 #
 class Tag < ApplicationRecord
+  include TagPresenter
   belongs_to :recipe, dependent: :destroy
   validates :name, presence: true, uniqueness: { scope: :recipe_id }
+
+  # Validate uniqness of recipe with tag TODO
 end

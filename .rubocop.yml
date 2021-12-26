@@ -27,9 +27,9 @@ Style/Documentation:
 
 Metrics/MethodLength:
   CountAsOne:
-  - array
-  - hash
-  - heredoc
+    - array
+    - hash
+    - heredoc
   Exclude:
     - db/**/*
 
@@ -55,4 +55,4 @@ RSpec/MultipleExpectations:
   Max: 5
 
 RSpec/ExampleLength:
-  Max: 10
+  Max: 20

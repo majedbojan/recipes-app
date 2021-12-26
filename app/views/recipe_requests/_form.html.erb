@@ -1,36 +1,114 @@
-<%= form_with(model: recipe_request, local: true, builder: ::FormBuilder) do |form| %>
+<%= form_with(model: @recipe, local: true, builder: ::FormBuilder) do |form| %>
   <div class="card mb-4">
     <div class="card-body">
-      <% if recipe_request.errors.any? %>
+      <% if @recipe.errors.any? %>
         <div id="error_explanation" class="alert alert-danger">
-          <h2 class="h4"><%= pluralize(recipe_request.errors.count, "error") %> prohibited this recipe_request from being saved:</h2>
+          <h2 class="h4"><%= pluralize(@recipe.errors.count, "error") %> prohibited this request from being saved:</h2>
 
           <ul>
-          <% recipe_request.errors.full_messages.each do |message| %>
+          <% @recipe.errors.full_messages.each do |message| %>
             <li><%= message %></li>
           <% end %>
           </ul>
         </div>
       <% end %>
-
+      <div class="row">
+        <div class="col-md-6">
           <div class="form-group">
-            <%= form.label :new %>
-        <%= form.text_field :new, class: 'form-control' %>
+            <%= form.label :name %>
+            <%= form.text_field :name, class: 'form-control' %>
           </div>
 
+          <div class="form-group">
+            <%= form.label :difficulty %>
+            <%= form.select :difficulty, Recipe.difficulties.keys, {}, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :budget %>
+            <%= form.select :budget, Recipe.budgets.keys, {}, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :people_quantity %>
+            <%= form.number_field :people_quantity, class: 'form-control' %>
+          </div>
+
+          <label>Recipe ingredients</label>
+          <div data-controller="nested-form">
+
+            <template data-target='nested-form.template'>
+              <%= form.fields_for :ingredients, Ingredient.new, child_index: 'TEMPLATE_RECORD' do |ingredient| %>
+                <%= render 'ingredient_fields', form: ingredient %>
+              <% end %>
+            </template>
+
+            <div data-target="nested-form.container" class="mb-4">
+              <%= form.fields_for :ingredients, form.object.ingredients do |ingredient| %>
+              <%= render 'ingredient_fields', form: ingredient %>
+              <% end %>
+            </div>
+
+            <%= button_tag("Add Ingredient", type: :button, class: 'btn btn-success btn-sm btn-block', data: { action: "click->nested-form#addItem" }) %>
+          </div>
+
+        </div>
+
+        <div class="col-md-6">
+
+          <div class="form-group">
+            <%= form.label :prep_time %>
+            <%= form.select :prep_time, recipe_time_options, {}, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :cook_time %>
+            <%= form.select :cook_time, recipe_time_options, {}, class: 'form-control' %>
+          </div>
+
+          <div class="form-group">
+            <%= form.label :images %>
+            <div class="custom-file">
+              <%= form.file_field :images, multiple: true, class: 'custom-file-input' %>
+              <label class="custom-file-label" for="images">Choose images</label>
+            </div>
+          </div>
+
+          <label>Recipe tags</label>
+          <div data-controller="nested-form">
+
+            <template data-target='nested-form.template'>
+              <%= form.fields_for :tags, Tag.new, child_index: 'TEMPLATE_RECORD' do |tag| %>
+                <%= render 'tag_fields', form: tag %>
+              <% end %>
+            </template>
+
+            <div data-target="nested-form.container" class="mb-4">
+              <%= form.fields_for :tags, form.object.tags do |tag| %>
+              <%= render 'tag_fields', form: tag %>
+              <% end %>
+            </div>
+
+            <%= button_tag("Add Tag", type: :button, class: 'btn btn-success btn-sm btn-block', data: { action: "click->nested-form#addItem" }) %>
+          </div>
+
+        </div>
+      </div>
+
+
         <div class="form-group mb-0">
-        <% if recipe_request.persisted? %>
+        <% if @recipe.persisted? %>
           <div class="float-right">
-            <%= link_to 'Destroy', recipe_request, method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' } %>
+            <%= link_to 'Destroy', @recipe, method: :delete, class: "text-danger", data: { confirm: 'Are you sure?' } %>
           </div>
         <% end %>
 
         <%= form.submit class: 'btn btn-primary' %>
 
-        <% if recipe_request.persisted? %>
-          <%= link_to "Cancel", recipe_request, class: "btn btn-link" %>
+        <% if @recipe.persisted? %>
+          <%= link_to "Cancel", @recipe_requests, class: "btn btn-link" %>
         <% else %>
-          <%= link_to "Cancel", recipe_requests_path, class: "btn btn-link" %>
+          <%= link_to "Cancel", @recipe_requests, class: "btn btn-link" %>
         <% end %>
       </div>
     </div>

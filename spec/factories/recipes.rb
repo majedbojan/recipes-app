@@ -29,9 +29,11 @@
 FactoryBot.define do
   factory :recipe do
     name { Faker::FunnyName.two_word_name }
-    # start_date   { Faker::Date.between(from: 2.days.ago, to: 30.days.from_now) }
-    # end_date     { Faker::Date.between(from: Date.today, to: 30.days.from_now) }
-    # start_time         { '20:00' }
-    # capacity     { 100 }
+    budget { 1 }
+    difficulty { 1 }
+    cook_time { '10 min' }
+    prep_time { '20 min' }
+    people_quantity { 2 }
+    user
   end
 end

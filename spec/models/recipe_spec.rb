@@ -33,8 +33,20 @@ RSpec.describe Recipe, type: :model do
 
   describe 'validation' do
     it { is_expected.to validate_presence_of(:name) }
-    # it { is_expected.to validate_presence_of(:capacity) }
-    # it { is_expected.to validate_presence_of(:date) }
-    # it { is_expected.to validate_presence_of(:time) }
+    it { is_expected.to validate_presence_of(:cook_time) }
+    it { is_expected.to validate_presence_of(:budget) }
+    it { is_expected.to validate_presence_of(:prep_time) }
+    it { is_expected.to validate_presence_of(:difficulty) }
+    it { is_expected.to validate_presence_of(:people_quantity) }
+
+    it {
+      expect(subject).to define_enum_for(:difficulty).with_values(very_easy: 0, easy: 1, average_level: 2, difficult: 3)
+    }
+
+    it {
+      expect(subject).to define_enum_for(:budget).with_values(cheap:           0,
+                                                              average_cost:    1,
+                                                              quite_expensive: 2)
+    }
   end
 end

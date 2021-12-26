@@ -21,5 +21,7 @@
 #
 FactoryBot.define do
   factory :tag do
+    recipe
+    name { Faker::Name.name }
   end
 end

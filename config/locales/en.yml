@@ -30,15 +30,24 @@
 # available at https://guides.rubyonrails.org/i18n.html.
 
 en:
-  hello: "Hello world"
+  data_found:             'Data found'
+  no_data_found:          'No data found'
+  not_found:              'Not found'
+  x_not_found:            '%{name} not found!'
+  update_successfully:    'Updated successfully'
+  x_updated_successfully:  '%{name} updated successfully'
+  created_successfully:   'Created successfully'
+  x_created_successfully: '%{name} created successfully'
+  deleted_successfully:   'Deleted successfully'
+  x_deleted_successfully: '%{name} deleted successfully'
   date:
     formats:
-      default: "%Y-%m-%d"
-      short: "%b %d"
-      long: "%B %d, %Y"
+      default: '%Y-%m-%d'
+      short: '%b %d'
+      long: '%B %d, %Y'
   time:
     formats:
-      default: "%a, %d %b %Y %H:%M:%S %z"
-      short: "%d %b %l:%M%p"
-      long: "%B %d, %Y %H:%M"
-      time_only: "%l:%M %P"
+      default: '%a, %d %b %Y %H:%M:%S %z'
+      short: '%d %b %l:%M%p'
+      long: '%B %d, %Y %H:%M'
+      time_only: '%l:%M %P'

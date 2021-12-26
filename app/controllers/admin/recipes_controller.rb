@@ -6,7 +6,7 @@ module Admin
 
     # GET /recipes
     def index
-      @q = Recipe.ransack(params[:q])
+      @q = Recipe.includes(:user).ransack(params[:q])
       @q.sorts = 'created_at desc' if @q.sorts.empty?
       @pagy, @recipes = pagy(@q.result(distinct: true))
     end

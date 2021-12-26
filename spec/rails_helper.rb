@@ -4,6 +4,7 @@
 require 'spec_helper'
 require 'support/database_cleaner'
 require 'support/factory_bot'
+require 'support/request_helpers'
 require 'support/shoulda_matchers'
 
 ENV['RAILS_ENV'] ||= 'test'
@@ -67,4 +68,6 @@ RSpec.configure do |config|
   config.filter_rails_from_backtrace!
   # arbitrary gems may also be filtered via:
   # config.filter_gems_from_backtrace("gem name")
+
+  config.include RequestHelpers, type: :request
 end

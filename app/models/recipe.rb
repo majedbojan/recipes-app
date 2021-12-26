@@ -28,6 +28,7 @@
 #
 class Recipe < ApplicationRecord
   include Activatable
+  include RecipePresenter
 
   has_many   :tags, dependent: :destroy
   has_many   :ingredients, dependent: :destroy
@@ -41,7 +42,13 @@ class Recipe < ApplicationRecord
                                 allow_destroy: true,
                                 reject_if:     proc { |att| att['name'].blank? }
   belongs_to :user, optional: true
+
+  validates :budget, presence: true
+  validates :cook_time, presence: true
+  validates :difficulty, presence: true
   validates :name, presence: true
+  validates :people_quantity, presence: true
+  validates :prep_time, presence: true
 
   enum budget: {
     cheap:           0,
@@ -55,11 +62,6 @@ class Recipe < ApplicationRecord
     average_level: 2,
     difficult:     3
   }
-
-  validates :name, presence: true
-  validates :budget, presence: true
-  validates :difficulty, presence: true
-  validates :prep_time, presence: true
 
   scope :recipe_budget, lambda { |str|
     case str
@@ -81,6 +83,7 @@ class Recipe < ApplicationRecord
     when 'average_level'
       quite_expensive
     when 'difficult'
+      difficult
     end
   }
 

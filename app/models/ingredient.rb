@@ -20,6 +20,7 @@
 #  fk_rails_...  (recipe_id => recipes.id) ON DELETE => nullify
 #
 class Ingredient < ApplicationRecord
+  include IngredientPresenter
   belongs_to :recipe, dependent: :destroy
   validates :name, presence: true, uniqueness: { scope: :recipe_id }
 end

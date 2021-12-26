@@ -5,7 +5,7 @@ class RecipesController < ApplicationController
 
   # GET /recipes
   def index
-    @q = Recipe.active
+    @q = Recipe.includes(:user).active
                .ransack(params[:q])
     @pagy, @recipes = pagy(@q.result(distinct: true))
   end

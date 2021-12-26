@@ -26,5 +26,9 @@
 #
 FactoryBot.define do
   factory :feedback do
+    user
+    recipe
+    comment { Faker::Lorem.paragraph_by_chars(number: 150) }
+    rating { rand(1...5) }
   end
 end

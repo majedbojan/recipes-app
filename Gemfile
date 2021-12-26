@@ -11,11 +11,11 @@ gem 'rails', '~> 6.0.3', '>= 6.0.3.4'
 gem 'turbolinks', '~> 5'
 gem 'webpacker', '~> 4.0'
 
-gem 'aws-sdk-s3',           require: false
+gem 'acts_as_api'
+gem 'aws-sdk-s3', require: false
 gem 'bootsnap', '>= 1.4.2', require: false
 gem 'devise'
 gem 'image_processing', '~> 1.2'
-# gem 'interactor-rails', '~> 2.0'
 gem 'pagy'
 gem 'phonelib'
 gem 'ransack'
