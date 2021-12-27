@@ -2,12 +2,10 @@
   <h1 class="h2">Show recipe</h1>
 
   <div class="btn-toolbar mb-2 mb-md-0">
-    <%= link_to admin_recipes_path, class: 'btn btn-light' do %>
+    <%= link_to admin_recipe_requests_path, class: 'btn btn-light' do %>
       <i class="fa fa-angle-left"></i>
-      All Recipes
+      All Requests
     <% end %>
-    <%= link_to "Show on app", recipe_path(@recipe), class: 'btn btn-info', target: '_blank' %>
-    <%= link_to "Edit", edit_admin_recipe_path(@recipe), class: 'btn btn-primary' %>
   </div>
 </div>
 
@@ -15,36 +13,42 @@
   <div class="card-body">
     <dl class="row">
       <dt class="col-sm-3">Name:</dt>
-      <dd class="col-sm-9"><%= @recipe.name %></dd>
+      <dd class="col-sm-9"><%= @recipe_request.name %></dd>
       <dt class="col-sm-3">Cook time:</dt>
-      <dd class="col-sm-9"><%= @recipe.cook_time %></dd>
+      <dd class="col-sm-9"><%= @recipe_request.cook_time %></dd>
       <dt class="col-sm-3">Difficulty:</dt>
-      <dd class="col-sm-9"><%= enum_label(@recipe.difficulty) %></dd>
+      <dd class="col-sm-9"><%= enum_label(@recipe_request.difficulty) %></dd>
       <dt class="col-sm-3">People Quantity:</dt>
-      <dd class="col-sm-9"><%= @recipe.people_quantity %></dd>
+      <dd class="col-sm-9"><%= @recipe_request.people_quantity %></dd>
       <dt class="col-sm-3">Prep time:</dt>
-      <dd class="col-sm-9"><%= @recipe.prep_time %></dd>
+      <dd class="col-sm-9"><%= @recipe_request.prep_time %></dd>
       <dt class="col-sm-3">Status:</dt>
-      <dd class="col-sm-9"><%= status_label(@recipe.status) %></dd>
+      <dd class="col-sm-9"><%= status_label(@recipe_request.status) %></dd>
       <dt class="col-sm-3">Tags:</dt>
       <dd class="col-sm-9">
-        <% @recipe.tags.pluck(:name).each do |tag| %>
+        <% @recipe_request.tags.pluck(:name).each do |tag| %>
             <button type="button" class="btn btn-outline-info btn-sm"><%= tag.capitalize %></button>
         <% end %>
       </dd>
 
       <dt class="col-sm-3">Ingredients:</dt>
       <dd class="col-sm-9">
-        <% @recipe.ingredients.pluck(:name).each do |ingredient| %>
+        <% @recipe_request.ingredients.pluck(:name).each do |ingredient| %>
             <button type="button" class="btn btn-outline-primary btn-sm"><%= ingredient.capitalize %></button>
         <% end %>
       </dd>
     </dl>
 
     <div class="text-center">
-      <% if @recipe.image_url.present? %>
-        <% image_tag(@recipe.image_url, class: 'card-img-top') %>
+      <% if @recipe_request.image_url.present? %>
+        <% image_tag(@recipe_request.image_url, class: 'card-img-top') %>
       <% end %>
     </div>
+  </div>
+</div>
+
+
+  <div class="btn-toolbar mb-2 mb-md-0">
+    <%= link_to "Approval Action", edit_admin_recipe_request_path(@recipe_request), class: 'btn btn-primary' %>
   </div>
 </div>

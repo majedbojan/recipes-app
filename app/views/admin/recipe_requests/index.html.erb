@@ -1,0 +1,38 @@
+<div class="page-header flex-wrap flex-md-nowrap">
+  <h1 class="h2">Recipe Requests</h1>
+</div>
+
+<div class="card mb-3">
+  <div class="table-responsive">
+    <table class="table table-hover mb-0">
+      <thead>
+        <tr>
+          <th><%= sort_link(@q, :name) %></th>
+          <th><%= sort_link(@q, :cook_time) %></th>
+          <th><%= sort_link(@q, :prep_time) %></th>
+          <th><%= sort_link(@q, :difficulty) %></th>
+          <th><%= sort_link(@q, :budget) %></th>
+          <th><%= sort_link(@q, :status) %></th>
+          <th></th>
+
+        </tr>
+      </thead>
+
+      <tbody>
+        <% @recipe_requests.each do |recipe| %>
+          <%= content_tag :tr, id: dom_id(recipe), class: dom_class(recipe) do %>
+            <td><%= recipe.name %></td>
+            <td><%= recipe.cook_time %></td>
+            <td><%= recipe.prep_time %></td>
+            <td><%= enum_label(recipe.difficulty) %></td>
+            <td><%= enum_label(recipe.budget) %></td>
+            <td><%= status_label(recipe.status) %></td>
+            <td><%= link_to 'Show', admin_recipe_request_path(recipe) %></td>
+          <% end %>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<%== pagy_bootstrap_nav(@pagy) %>

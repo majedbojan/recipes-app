@@ -1,0 +1,36 @@
+<%= form_with(model: [:admin, recipe], local: true, builder: ::FormBuilder) do |form| %>
+  <div class="card mb-4">
+    <div class="card-body">
+      <% if recipe.errors.any? %>
+        <div id="error_explanation" class="alert alert-danger">
+          <h2 class="h4"><%= pluralize(recipe.errors.count, "error") %> prohibited this recipe from being saved:</h2>
+
+          <ul>
+          <% recipe.errors.full_messages.each do |message| %>
+            <li><%= message %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="row">
+        <div class="col-md-6">
+          <div class="form-group">
+            <%= form.label :status %>
+            <%= form.select :status, Recipe.statuses.keys, {}, class: 'form-control' %>
+          </div>
+        </div>
+      </div>
+      <div class="form-group mb-0">
+
+        <%= form.submit class: 'btn btn-primary' %>
+
+        <% if recipe.persisted? %>
+          <%= link_to "Cancel", admin_recipe_path(recipe), class: "btn btn-link" %>
+        <% else %>
+          <%= link_to "Cancel", admin_recipes_path, class: "btn btn-link" %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

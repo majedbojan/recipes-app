@@ -29,6 +29,7 @@ Rails.application.routes.draw do
     resources :dashboard, only:   %i[index]
     resources :users,     except: %i[new create]
     resources :recipes
+    resources :recipe_requests, except: :create
     root to: redirect('admin/dashboard')
   end
   namespace :api do

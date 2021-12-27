@@ -58,6 +58,10 @@ Note: `develop` is the base branch for development, git tree should be `develop`
 
 ```powershell
 bundle exec rspec spec/
+
+# Output
+Finished in 2.51 seconds (files took 5.96 seconds to load)
+83 examples, 0 failures
 ```
 
 ### DB Design
