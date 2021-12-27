@@ -12,10 +12,15 @@ AllCops:
     - '**/*.spec'
     - '**/Gemfile'
   Exclude:
-    - bin/**
-    - node_modules/**/*
+    - 'config/**/*'
+    - 'bin/**/*'
+    - 'tmp/**/*'
+    - 'log/**/*'
+    - 'public/**/*'
+    - 'app/views/**/*'
     - db/schema.rb
-
+    - vendor/bundle/**/*
+    - node_modules/**/*
 Style/FrozenStringLiteralComment:
   Enabled: true
 
