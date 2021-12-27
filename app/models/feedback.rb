@@ -43,6 +43,9 @@ class Feedback < ApplicationRecord
   validates :comment, presence: true
   validates :recipe_id, uniqueness: { scope: :user_id }
 
+
+  delegate :name, to: :user, prefix: true
+
   def body
     JSON.parse(comment.body.to_json)
   end

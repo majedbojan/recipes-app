@@ -118,5 +118,10 @@ class Recipe < ApplicationRecord
   def number_of_feedbacks
     feedbacks.size
   end
-  # private
+
+  def total_rate
+    return 0 if number_of_feedbacks.zero?
+
+    feedbacks.sum(:rating) / number_of_feedbacks
+  end
 end

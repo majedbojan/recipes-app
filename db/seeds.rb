@@ -7,8 +7,11 @@
 NO_OF_RECIPES = 100
 
 FactoryBot.create(:user, email: 'admin@recipe.app', role: :admin)
+FactoryBot.create(:user, email: 'user@recipe.app', role: :user)
 
-basic_params = { created_at: Time.zone.now, updated_at: Time.zone.now }
+def basic_params
+{ created_at: Time.zone.now, updated_at: Time.zone.now }
+end
 recipes = JSON.parse(File.read('db/data/recipes.json')).first(NO_OF_RECIPES)
 
 ## ----------------------------------------------------------------------------- ##
@@ -45,15 +48,15 @@ Recipe.insert_all(recipes_params)
 
 ## ----------------------------------------------------------------------------- ##
 
-Recipe.all.each do |recipe|
-  find_recipe = recipes.find { |r| r['name'] == recipe.name }
-  ## Tags
-  if find_recipe && find_recipe['tags']
-    tag_params = find_recipe['tags'].map { |tag| { name: tag, recipe_id: recipe.id }.merge(basic_params) }
-    Tag.insert_all(tag_params)
-  end
+def create_tags(find_recipe, recipe)
+  return unless find_recipe && find_recipe['tags']
 
-  next unless find_recipe && find_recipe['ingredients']
+  tag_params = find_recipe['tags'].map { |tag| { name: tag, recipe_id: recipe.id }.merge(basic_params) }
+  Tag.insert_all(tag_params)
+end
+
+def create_ingredients(find_recipe, recipe)
+  return unless find_recipe && find_recipe['ingredients']
 
   ingredient_params = find_recipe['ingredients'].map do |ingredient|
     { name: ingredient, recipe_id: recipe.id }.merge(basic_params)
@@ -61,8 +64,26 @@ Recipe.all.each do |recipe|
   Ingredient.insert_all(ingredient_params)
 end
 
-## ----------------------------------------------------------------------------- ##
+def create_feedbacks(recipe)
+  feedback_params = []
+  5.times do
+    feedback_params.push({
+      comment: Faker::Lorem.paragraph_by_chars(number: 150),
+      rating: rand(1...5), user_id: User.all.sample.id, recipe_id: recipe.id
+    }.merge(basic_params))
+  end
+  Feedback.insert_all(feedback_params)
+end
 
-## Feedbacks
+Recipe.all.each do |recipe|
+  find_recipe = recipes.find { |r| r['name'] == recipe.name }
 
-rand(1...5)
+  create_tags(find_recipe, recipe)
+  create_ingredients(find_recipe, recipe)
+  create_feedbacks(recipe)
+end
+
+# Update Action text body  column
+Feedback.all.map do |feedback|
+  feedback.comment.update(body: Faker::Lorem.paragraph_by_chars(number: 50))
+end
