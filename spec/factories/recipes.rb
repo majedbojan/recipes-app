@@ -29,7 +29,7 @@
 #
 FactoryBot.define do
   factory :recipe do
-    name { Faker::FunnyName.two_word_name }
+    name { Faker::Food.dish }
     budget { 1 }
     difficulty { 1 }
     cook_time { '10 min' }

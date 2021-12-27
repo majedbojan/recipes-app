@@ -41,7 +41,7 @@ class Recipe < ApplicationRecord
   accepts_nested_attributes_for :ingredients,
                                 allow_destroy: true,
                                 reject_if:     proc { |att| att['name'].blank? }
-  belongs_to :user, optional: true
+  belongs_to :user
 
   validates :name, presence: true, uniqueness: true
   validates :budget, presence: true
@@ -67,7 +67,7 @@ class Recipe < ApplicationRecord
     active:   1,
     inactive: 2
   }
-  scope :recipe_budget, lambda { |str|
+  scope :recipe_budget, -> { lambda } do |str|
     case str
     when 'cheap'
       cheap
@@ -76,9 +76,9 @@ class Recipe < ApplicationRecord
     when 'quite_expensive'
       quite_expensive
     end
-  }
+  end
 
-  scope :recipe_difficulty, lambda { |str|
+  scope :recipe_difficulty, -> { lambda } do |str|
     case str
     when 'very_easy'
       cheap
@@ -89,7 +89,7 @@ class Recipe < ApplicationRecord
     when 'difficult'
       difficult
     end
-  }
+  end
 
   def self.ransackable_scopes(_auth_object = nil)
     %i[recipe_budget recipe_difficulty]
@@ -115,5 +115,8 @@ class Recipe < ApplicationRecord
     user&.name || 'admin'
   end
 
+  def number_of_feedbacks
+    feedbacks.size
+  end
   # private
 end

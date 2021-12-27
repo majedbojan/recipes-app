@@ -13,6 +13,7 @@ module RecipePresenter
       t.add :author_name
       t.add :rate_percentage
       t.add :status
+      t.add :number_of_feedbacks
     end
 
     ## ----------------------- Consumer Response ---------------------- ##

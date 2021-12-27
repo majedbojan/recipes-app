@@ -3,8 +3,6 @@
 module Api
   module V1
     class RecipesController < Api::V1::BaseController
-      before_action :authenticate_user!, only: :create
-
       ## ------------------------------------------------------------ ##
 
       # GET : api/v1/recipes/
@@ -41,7 +39,6 @@ module Api
               )
       end
 
-      # Search filters
       def search_params
         {
           name_cont:         params[:search],
@@ -51,14 +48,16 @@ module Api
       end
 
       def collection
-        @collection ||= build_collection.includes(:user)
+        @collection ||= build_collection.includes(:user, :feedbacks)
       end
 
       def params_processed
-        resource_params.merge(status: 'pending')
+        resource_params.merge(status: status, user: current_user)
       end
-      # Custom ordering and sorting
-      # def get_order; end
+
+      def status
+        current_user.admin? ? 'active' : 'pending'
+      end
     end
   end
 end

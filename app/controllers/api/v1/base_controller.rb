@@ -4,6 +4,8 @@ module Api
   module V1
     class BaseController < Api::V1::ApiController
       before_action :find_resource, only: %i[show update destroy]
+      before_action :authenticate_user!, only: :create
+
       ## ------------------------------------------------------------ ##
 
       # GET : /v2/{resource}

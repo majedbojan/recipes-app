@@ -7,7 +7,7 @@ RSpec.describe 'Api::V1::Recipes', type: :request do
 
   let!(:recipe) { create(:recipe) }
   let!(:user) { create(:user) }
-  let!(:second_recipe) { create(:recipe) }
+  let!(:second_recipe) { create(:recipe, name: 'Pasta Carbonara') }
   let!(:tag) { create(:tag, recipe: second_recipe) }
   let!(:ingredient) { create(:ingredient, recipe: second_recipe) }
 
@@ -27,19 +27,21 @@ RSpec.describe 'Api::V1::Recipes', type: :request do
 
       it 'returns collection data' do
         expect(data_response[:recipes]).to eq([
-                                                { 'id'              => second_recipe.id,
-                                                  'name'            => second_recipe.name,
-                                                  'image_url'       => nil,
-                                                  'status'          => 'active',
-                                                  'author_name'     => second_recipe.author_name,
-                                                  'rate_percentage' => 200.0 },
+                                                { 'id'                  => second_recipe.id,
+                                                  'name'                => second_recipe.name,
+                                                  'image_url'           => nil,
+                                                  'status'              => 'active',
+                                                  'number_of_feedbacks' => second_recipe.feedbacks.size,
+                                                  'author_name'         => second_recipe.author_name,
+                                                  'rate_percentage'     => 200.0 },
                                                 {
-                                                  'id'              => recipe.id,
-                                                  'name'            => recipe.name,
-                                                  'status'          => 'active',
-                                                  'image_url'       => nil,
-                                                  'author_name'     => recipe.author_name,
-                                                  'rate_percentage' => 200.0
+                                                  'id'                  => recipe.id,
+                                                  'name'                => recipe.name,
+                                                  'status'              => 'active',
+                                                  'number_of_feedbacks' => recipe.feedbacks.size,
+                                                  'image_url'           => nil,
+                                                  'author_name'         => recipe.author_name,
+                                                  'rate_percentage'     => 200.0
                                                 }
                                               ])
       end
@@ -53,24 +55,26 @@ RSpec.describe 'Api::V1::Recipes', type: :request do
       it 'returns recipes with matches provided tag IDs' do
         get("#{endpoint}?tag_ids[]=#{tag.id}")
         expect(data_response[:recipes]).to eq([
-                                                { 'id'              => second_recipe.id,
-                                                  'name'            => second_recipe.name,
-                                                  'status'          => 'active',
-                                                  'image_url'       => nil,
-                                                  'author_name'     => second_recipe.author_name,
-                                                  'rate_percentage' => 200.0 }
+                                                { 'id'                  => second_recipe.id,
+                                                  'name'                => second_recipe.name,
+                                                  'status'              => 'active',
+                                                  'number_of_feedbacks' => recipe.feedbacks.size,
+                                                  'image_url'           => nil,
+                                                  'author_name'         => second_recipe.author_name,
+                                                  'rate_percentage'     => 200.0 }
                                               ])
       end
 
       it 'returns recipes with matches provided ingredients IDs' do
         get("#{endpoint}?ingredient_ids[]=#{ingredient.id}")
         expect(data_response[:recipes]).to eq([
-                                                { 'id'              => second_recipe.id,
-                                                  'name'            => second_recipe.name,
-                                                  'status'          => 'active',
-                                                  'image_url'       => nil,
-                                                  'author_name'     => second_recipe.author_name,
-                                                  'rate_percentage' => 200.0 }
+                                                { 'id'                  => second_recipe.id,
+                                                  'name'                => second_recipe.name,
+                                                  'status'              => 'active',
+                                                  'number_of_feedbacks' => recipe.feedbacks.size,
+                                                  'image_url'           => nil,
+                                                  'author_name'         => second_recipe.author_name,
+                                                  'rate_percentage'     => 200.0 }
                                               ])
       end
     end
@@ -91,25 +95,26 @@ RSpec.describe 'Api::V1::Recipes', type: :request do
       end
 
       it 'returns recipe object' do
-        expect(data_response[:recipe]).to eq({ 'author_name'     => second_recipe.author_name,
-                                               'budget'          => 'average_cost',
-                                               'budget_fr'       => 'Coût moyen',
-                                               'cook_time'       => '10 min',
-                                               'difficulty'      => 'easy',
-                                               'difficulty_fr'   => 'Niveau moyen',
-                                               'status'          => 'active',
-                                               'feedbacks'       => [],
-                                               'id'              => second_recipe.id,
-                                               'image_url'       => nil,
-                                               'name'            => second_recipe.name,
-                                               'people_quantity' => 2,
-                                               'rate_percentage' => second_recipe.rate_percentage,
-                                               'ingredients'     => [{
+        expect(data_response[:recipe]).to eq({ 'author_name'         => second_recipe.author_name,
+                                               'budget'              => 'average_cost',
+                                               'budget_fr'           => 'Coût moyen',
+                                               'cook_time'           => '10 min',
+                                               'difficulty'          => 'easy',
+                                               'difficulty_fr'       => 'Niveau moyen',
+                                               'status'              => 'active',
+                                               'number_of_feedbacks' => second_recipe.feedbacks.size,
+                                               'feedbacks'           => [],
+                                               'id'                  => second_recipe.id,
+                                               'image_url'           => nil,
+                                               'name'                => second_recipe.name,
+                                               'people_quantity'     => 2,
+                                               'rate_percentage'     => second_recipe.rate_percentage,
+                                               'ingredients'         => [{
                                                  'id'        => ingredient.id,
                                                  'name'      => ingredient.name,
                                                  'recipe_id' => second_recipe.id
                                                }],
-                                               'tags'            => [{
+                                               'tags'                => [{
                                                  'id'        => tag.id,
                                                  'name'      => tag.name,
                                                  'recipe_id' => second_recipe.id
@@ -166,14 +171,19 @@ RSpec.describe 'Api::V1::Recipes', type: :request do
     context 'when failure' do
       it 'returns missing name' do
         valid_params[:recipe].delete(:name)
-        post(endpoint, params: valid_params)
+        post(endpoint, params: valid_params, headers: request_headers(user))
         expect(message_response).to eq("Name can't be blank")
       end
 
       it 'does not processs the entity' do
         valid_params[:recipe].delete(:name)
-        post(endpoint, params: valid_params)
+        post(endpoint, params: valid_params, headers: request_headers(user))
         expect(status_response).to eq('unprocessable_entity')
+      end
+
+      it 'returns unauthorize' do
+        post(endpoint, params: valid_params)
+        expect(message_response).to eq('Missing Parameters: Authorization')
       end
     end
   end

@@ -14,10 +14,11 @@
 #
 # Indexes
 #
-#  index_feedbacks_on_comment    (comment) WHERE (comment IS NOT NULL)
-#  index_feedbacks_on_rating     (rating)
-#  index_feedbacks_on_recipe_id  (recipe_id)
-#  index_feedbacks_on_user_id    (user_id)
+#  index_feedbacks_on_comment                (comment) WHERE (comment IS NOT NULL)
+#  index_feedbacks_on_rating                 (rating)
+#  index_feedbacks_on_recipe_id              (recipe_id)
+#  index_feedbacks_on_recipe_id_and_user_id  (recipe_id,user_id) UNIQUE
+#  index_feedbacks_on_user_id                (user_id)
 #
 # Foreign Keys
 #
@@ -27,5 +28,18 @@
 require 'rails_helper'
 
 RSpec.describe Feedback, type: :model do
-  pending "add some examples to (or delete) #{__FILE__}"
+  describe '#Feedback' do
+    subject(:feedback) { build(:feedback) }
+
+    context 'when associating' do
+      it { is_expected.to belong_to(:user) }
+      it { is_expected.to belong_to(:recipe) }
+    end
+
+    context 'when validating' do
+      it { is_expected.to validate_presence_of(:comment) }
+      it { is_expected.to validate_presence_of(:recipe) }
+      it { is_expected.to validate_presence_of(:user) }
+    end
+  end
 end

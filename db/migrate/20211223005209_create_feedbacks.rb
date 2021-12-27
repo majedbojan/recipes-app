@@ -12,6 +12,7 @@ class CreateFeedbacks < ActiveRecord::Migration[6.0]
       t.timestamps null: false
       t.index :rating
       t.index :comment, where: 'comment IS NOT NULL'
+      t.index(%i[recipe_id user_id], unique: true)
     end
   end
 end

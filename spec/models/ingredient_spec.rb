@@ -22,9 +22,17 @@
 require 'rails_helper'
 
 RSpec.describe Ingredient, type: :model do
-  subject(:tag) { build(:tag) }
+  describe '#Ingredient' do
+    subject(:tag) { build(:tag) }
 
-  describe 'validation' do
-    it { is_expected.to validate_presence_of(:name) }
+    context 'when associating' do
+      it { is_expected.to belong_to(:recipe) }
+    end
+
+    context 'when validating' do
+      it { is_expected.to validate_uniqueness_of(:name).scoped_to(:recipe_id) }
+
+      it { is_expected.to validate_presence_of(:name) }
+    end
   end
 end

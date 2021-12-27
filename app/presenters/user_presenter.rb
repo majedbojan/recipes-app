@@ -8,7 +8,10 @@ module UserPresenter
 
     api_accessible :base do |t|
       t.add :id
+      t.add :role
       t.add :name
+      t.add :email
+      t.add :phone
     end
 
     ## ----------------------- Consumer Response ---------------------- ##

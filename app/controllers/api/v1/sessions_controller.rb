@@ -3,6 +3,8 @@
 module Api
   module V1
     class SessionsController < Api::V1::BaseController
+      skip_before_action :authenticate_user!, only: :create
+
       ## ------------------------------------------------------------ ##
 
       # POST - v1/login

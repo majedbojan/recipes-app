@@ -14,10 +14,11 @@
 #
 # Indexes
 #
-#  index_feedbacks_on_comment    (comment) WHERE (comment IS NOT NULL)
-#  index_feedbacks_on_rating     (rating)
-#  index_feedbacks_on_recipe_id  (recipe_id)
-#  index_feedbacks_on_user_id    (user_id)
+#  index_feedbacks_on_comment                (comment) WHERE (comment IS NOT NULL)
+#  index_feedbacks_on_rating                 (rating)
+#  index_feedbacks_on_recipe_id              (recipe_id)
+#  index_feedbacks_on_recipe_id_and_user_id  (recipe_id,user_id) UNIQUE
+#  index_feedbacks_on_user_id                (user_id)
 #
 # Foreign Keys
 #

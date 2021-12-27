@@ -31,7 +31,7 @@ RSpec.describe 'Api::V1::Tags', type: :request do
                                            ])
       end
 
-      it 'returns 2 records' do
+      it 'returns single record' do
         expect(data_response[:tags].size).to eq(1)
       end
     end

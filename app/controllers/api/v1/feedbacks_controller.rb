@@ -3,8 +3,6 @@
 module Api
   module V1
     class FeedbacksController < Api::V1::BaseController
-      before_action :authenticate_user!, only: :create
-
       ## ------------------------------------------------------------ ##
 
       # GET : api/v1/recipes/:recipe_id/feedbacks
@@ -21,7 +19,7 @@ module Api
 
       # Search filters
       def search_params
-        { recipe_id: params[:recipe_id] }
+        { recipe_id_eq: params[:recipe_id] }
       end
 
       def feedback_params
