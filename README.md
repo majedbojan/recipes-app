@@ -46,7 +46,7 @@ Note: Total recipes are 9500, please feel free to import as less as you need by 
 
 ### Branches
 
-Note: `develop` is the base branch for development, git tree should be `develop` -> `master`
+Note: `develop` is the base branch for development, git tree should be `develop` -> `main`. `master` used for `heroku` deployment
 
 ### Environemtens
 
