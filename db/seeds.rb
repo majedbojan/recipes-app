@@ -6,8 +6,8 @@
 # Total recipes are 9500, please feel free to import as less as you need
 NO_OF_RECIPES = 100
 
-FactoryBot.create(:user, email: 'admin@recipe.app', role: :admin)
-FactoryBot.create(:user, email: 'user@recipe.app', role: :user)
+User.create(email: 'admin@recipe.app', role: :admin, password: 'password')
+User.create(email: 'user@recipe.app', role: :user, password: 'password')
 
 def basic_params
 { created_at: Time.zone.now, updated_at: Time.zone.now }
