@@ -6,11 +6,11 @@
 # Total recipes are 9500, please feel free to import as less as you need
 NO_OF_RECIPES = 100
 
-User.create(email: 'admin@recipe.app', role: :admin, password: 'password')
-User.create(email: 'user@recipe.app', role: :user, password: 'password')
+User.create(name: 'admin', email: 'admin@recipe.app', role: :admin, password: 'password')
+User.create(name: 'user', email: 'user@recipe.app', role: :user, password: 'password')
 
 def basic_params
-{ created_at: Time.zone.now, updated_at: Time.zone.now }
+  { created_at: Time.zone.now, updated_at: Time.zone.now }
 end
 recipes = JSON.parse(File.read('db/data/recipes.json')).first(NO_OF_RECIPES)
 
@@ -68,7 +68,7 @@ def create_feedbacks(recipe)
   feedback_params = []
   5.times do
     feedback_params.push({
-      comment: Faker::Lorem.paragraph_by_chars(number: 150),
+      comment: 'Est et omnis. Quis numquam excepturi. Repellat quasi dolores. Tenetur incidunt ea.',
       rating: rand(1...5), user_id: User.all.sample.id, recipe_id: recipe.id
     }.merge(basic_params))
   end
@@ -85,5 +85,5 @@ end
 
 # Update Action text body  column
 Feedback.all.map do |feedback|
-  feedback.comment.update(body: Faker::Lorem.paragraph_by_chars(number: 50))
+  feedback.comment.update(body: 'Est et omnis. Quis numquam excepturi. Repellat quasi dolores. Tenetur incidunt ea.')
 end

@@ -24,7 +24,7 @@ module Admin
 
     # POST /recipes
     def create
-      @recipe = Recipe.new(recipe_params)
+      @recipe = Recipe.new(params_processed)
       if @recipe.save
         redirect_to admin_recipe_path(@recipe), notice: 'Recipe was successfully created.'
       else
@@ -34,7 +34,7 @@ module Admin
 
     # PATCH/PUT /recipes/1
     def update
-      if @recipe.update(recipe_params)
+      if @recipe.update(params_processed)
         redirect_to admin_recipe_path(@recipe), notice: 'Recipe was successfully updated.'
       else
         render :edit
@@ -68,6 +68,10 @@ module Admin
               tags_attributes:        %i[id name _destroy],
               ingredients_attributes: %i[id name _destroy]
             )
+    end
+
+    def params_processed
+      recipe_params.merge(user: current_user)
     end
   end
 end
