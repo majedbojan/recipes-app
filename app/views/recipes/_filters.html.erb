@@ -50,7 +50,7 @@
         <%=
           f.select :difficulty_eq,
           Recipe.difficulties.map { |k, v| [k.titleize, v] },
-          { include_blank: 'All difficulties' },
+          { include_blank: 'Filter by preparation difficulties' },
           class: 'form-control text-left',
           dir: 'rtl'
         %>
@@ -59,7 +59,7 @@
         <%=
           f.select :budget_eq,
           Recipe.budgets.map { |k, v| [k.titleize, v] },
-          { include_blank: 'All budgets' },
+          { include_blank: 'Filter by budget' },
           class: 'form-control text-left',
           dir: 'rtl'
         %>
