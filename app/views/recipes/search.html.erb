@@ -1,0 +1,7 @@
+<div style="list-style: none; position: absolute; width: 100%; background-color: white; z-index: 10; overflow-y: scroll; max-height: 300px;margin-bottom: 10px; -webkit-overflow-scrolling: touch;">
+  <% @recipes.each do |recipe| %>
+    <li class="list-group-item" role="option" data-autocomplete-value="<%= recipe.id %>" data-autocomplete-label="<%= recipe.name %>">
+      <%= recipe.name %>
+    </li>
+  <% end %>
+</div>

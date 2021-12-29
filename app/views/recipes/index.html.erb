@@ -1,9 +1,6 @@
+<%= render partial: 'filters' %>
 
-<div class="page-header flex-wrap flex-md-nowrap">
-  <h1 class="h2">Recipes</h1>
-</div>
-
-<div class="card-columns">
+<div class="card-columns" style="position: relative;">
   <%= render partial: 'recipe', collection: @recipes %>
 </div>
 

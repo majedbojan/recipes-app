@@ -67,7 +67,8 @@ class Recipe < ApplicationRecord
     active:   1,
     inactive: 2
   }
-  scope :recipe_budget, -> { lambda } do |str|
+
+  scope :recipe_budget, lambda { |str|
     case str
     when 'cheap'
       cheap
@@ -76,9 +77,9 @@ class Recipe < ApplicationRecord
     when 'quite_expensive'
       quite_expensive
     end
-  end
+  }
 
-  scope :recipe_difficulty, -> { lambda } do |str|
+  scope :recipe_difficulty, lambda { |str|
     case str
     when 'very_easy'
       cheap
@@ -89,7 +90,7 @@ class Recipe < ApplicationRecord
     when 'difficult'
       difficult
     end
-  end
+  }
 
   def self.ransackable_scopes(_auth_object = nil)
     %i[recipe_budget recipe_difficulty]

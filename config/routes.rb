@@ -23,6 +23,10 @@ Rails.application.routes.draw do
     member do
       get  :tag
     end
+
+    collection do
+      get :search
+    end
   end
 
   namespace :admin do
