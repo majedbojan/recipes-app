@@ -85,4 +85,10 @@ Finished in 2.51 seconds (files took 5.96 seconds to load)
 
 ### DB Design
 
+#### Basic ERD
+
 ![ERD](./docs/recipeAppDB.png)
+
+#### Schema ERD
+
+![ERD](./docs/domain-model.png)
