@@ -25,8 +25,7 @@ module Api
       private
 
       def generate_token(user)
-        payload = user.login_payload
-        JsonWebToken.encode(payload)
+        JsonWebToken.encode(user.login_payload)
       end
 
       def login_params

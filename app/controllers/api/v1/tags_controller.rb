@@ -18,7 +18,6 @@ module Api
         {
           id:        params[:id],
           recipe_id: params[:recipe_id],
-
           name_cont: params[:search]
         }
       end

@@ -39,13 +39,6 @@ module ApplicationHelper
     )
   end
 
-  def book_button(label: 'Add Comment', disabled_label: 'Unavailable', disabled: false, **args)
-    classes = %w[btn btn-primary btn-lg px-5] + Array(args.fetch(:class, nil))
-
-    tag.button(disabled ? disabled_label : label, class: classes, disabled: disabled,
-data: { toggle: 'modal', target: '#Add Comment' })
-  end
-
   def render_form_error(error)
     return if error.blank?
     return tag.div(error, class: 'alert alert-danger') unless error.is_a?(ActiveModel::Errors)

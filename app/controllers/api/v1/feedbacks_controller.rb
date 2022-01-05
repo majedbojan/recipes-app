@@ -27,7 +27,7 @@ module Api
       end
 
       def params_processed
-        resource_params.merge(recipe: recipe, user: User.first)
+        resource_params.merge(recipe: recipe, user: current_user)
       end
 
       def recipe
