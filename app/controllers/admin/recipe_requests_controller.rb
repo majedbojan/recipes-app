@@ -2,7 +2,7 @@
 
 module Admin
   class RecipeRequestsController < Admin::BaseController
-    before_action :set_recipe, only: %i[show edit update]
+    before_action :set_recipe, only: :show
 
     # GET /recipe_requests
     def index
@@ -15,16 +15,16 @@ module Admin
     def show; end
 
     # GET /recipes/1/edit
-    def edit; end
+    # def edit; end
 
     # PATCH/PUT /recipes/1
-    def update
-      if @recipe_request.update(recipe_params)
-        redirect_to admin_recipe_path(@recipe), notice: 'Recipe was successfully updated.'
-      else
-        render :edit
-      end
-    end
+    # def update
+    #   if @recipe_request.update(recipe_params)
+    #     redirect_to admin_recipe_path(@recipe), notice: 'Recipe was successfully updated.'
+    #   else
+    #     render :edit
+    #   end
+    # end
 
     private
 
