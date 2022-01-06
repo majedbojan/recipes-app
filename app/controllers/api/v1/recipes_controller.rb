@@ -47,6 +47,10 @@ module Api
         }
       end
 
+      def collection_order
+        { name: :asc }
+      end
+
       def collection
         @collection ||= build_collection.includes(:user, :feedbacks)
       end
