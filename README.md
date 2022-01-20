@@ -9,10 +9,6 @@ Recipes is an application that helps you find a recipe that you can prepare with
 
 ![Preview](./docs/recipeAppPreview.gif)
 
-## Live demo
-
-[Heroku live](https://recipe-app-test.herokuapp.com/)
-
 ### Credentials
 
 #### user:
